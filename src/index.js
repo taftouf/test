@@ -3,65 +3,13 @@ require('./ModalConnect');
 import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import {repeat} from 'lit/directives/repeat.js';
+import { styleSheet } from './component-style';
 
 
 export class Web3Element extends LitElement {
-  static styles = css`
-    web-dialog {
-      --dialog-border-radius: 12px;
-      --dialog-max-width: 60%;
-      color: black;
-      text-align: left;
-    }
-    .Web3-Button {
-      font-size: 16px;
-      letter-spacing: 1px;
-      font-weight: 400 !important;
-      background-color: #adabab;
-      color: rgb(0, 0, 0);
-      padding: 15px 10px;
-      margin-top: 10px;
-      text-align: left;
-      display: inline-block !important;
-      text-decoration: none;
-      border: 0px;
-      border-color: #a3a375;
-      width: 100%;
-      cursor: pointer;
-      transition: all 0.3s 0s ease-in-out;
-      border-radius: 4px;
-    }
-    
-    /* The Close Button */
-    .web3-close {
-      color: black;
-      float: right;
-      font-size: 20px;
-      font-weight: bold;
-      border: 0px;
-      border-radius: 0px;
-      background-color: white;
-    }
-    
-    .web3-close:hover {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-      background-color: #adabab;
-      border-radius: 50%;
-    }
-
-    .web3-prix {
-      color: black;
-      float: right;
-      font-size: 15px;
-      font-weight: bold;
-      border: 0px;
-      border-radius: 0px;
-      background-color: #adabab;
-    }
-  
-  `;
+  static get styles(){
+    return styleSheet;
+  }
 
   static properties = {
     signer: {type: String},
@@ -98,7 +46,7 @@ export class Web3Element extends LitElement {
       <!-- Modal Connect -->
       <web-dialog name="connect" center>
         <header>
-          <span>Connect Your Wallet</span>
+          <span class="Web3-Title">Connect Your Wallet</span>
           <button class="web3-close" @click=${()=>{this._connect(0)}}>&times;</button>
         </header>
         <article>
@@ -113,7 +61,7 @@ export class Web3Element extends LitElement {
        <!-- Modal Pay -->
        <web-dialog name="pay" center>
         <header>
-          <span>Pay With Crypto</span>
+          <span class="Web3-Title">Pay With Crypto</span>
           <button class="web3-close" @click=${()=>this._pay(0)}>&times;</button>
         </header>
         <article>
@@ -129,28 +77,56 @@ export class Web3Element extends LitElement {
       <!-- success -->
           <web-dialog name="success" center>
             <header>
-              <span>success</span>
+              <span class="Web3-Title">Your payment has been processed successfully</span>
               <button class="web3-close" @click=${()=>this._success(0)}>&times;</button>
             </header>
-            <article>success</article>
+            <article class="demo-1-web3">
+              <div class="ui-success">
+                <svg viewBox="0 0 87 87" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="Group-3" transform="translate(2.000000, 2.000000)">
+                          <circle id="Oval-2" stroke="rgba(165, 220, 134, 0.2)" stroke-width="4" cx="41.5" cy="41.5" r="41.5"></circle>
+                            <circle  class="ui-success-circle" id="Oval-2" stroke="#A5DC86" stroke-width="4" cx="41.5" cy="41.5" r="41.5"></circle>
+                            <polyline class="ui-success-path" id="Path-2" stroke="#A5DC86" stroke-width="4" points="19 38.8036813 31.1020744 54.8046875 63.299221 28"></polyline>
+                        </g>
+                    </g>
+                </svg>
+              </div>
+            </article>
           </web-dialog>
       <!-- failed -->
           <web-dialog name="failed" center>
             <header>
-              <span>failed</span>
+              <span class="Web3-Title">Transaction Failed</span>
               <button class="web3-close" @click=${()=>this._failed(0)}>&times;</button>
             </header>
-            <article>failed</article>
-          </web-dialog>
-       <!-- failed -->
-          <web-dialog name="pending" center>
-            <header>
-              <span>Please Wait your payment in progress</span>
-              <button class="web3-close" @click=${()=>this._pending(0)}>&times;</button>
-            </header>
-            <article>pending</article>
+            <article class="demo-1-web3">
+              <div class="ui-error">
+                <svg  viewBox="0 0 87 87" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g id="Group-2" transform="translate(2.000000, 2.000000)">
+                        <circle id="Oval-2" stroke="rgba(252, 191, 191, .5)" stroke-width="4" cx="41.5" cy="41.5" r="41.5"></circle>
+                        <circle  class="ui-error-circle" stroke="#F74444" stroke-width="4" cx="41.5" cy="41.5" r="41.5"></circle>
+                          <path class="ui-error-line1" d="M22.244224,22 L60.4279902,60.1837662" id="Line" stroke="#F74444" stroke-width="3" stroke-linecap="square"></path>
+                          <path class="ui-error-line2" d="M60.755776,21 L23.244224,59.8443492" id="Line" stroke="#F74444" stroke-width="3" stroke-linecap="square"></path>
+                      </g>
+                  </g>
+                </svg>
+              </div>
+            </article>
           </web-dialog>
 
+       <!-- loading -->
+          <web-dialog name="pending" center>
+            <header>
+              <span class="Web3-Title">Please wait your payment is being processed</span>
+            </header>
+            <article>
+              <div class="load">
+                <div class="lds-dual-ring"></div>
+              </div>
+            </article>
+          </web-dialog>
     `;
   }
 
@@ -194,9 +170,16 @@ export class Web3Element extends LitElement {
 
   _pending(n){
     const $dialog = document.querySelector("web3-element").shadowRoot.querySelector('web-dialog[name="pending"]');
+    
+    window.addEventListener('click', function(e){ 
+      if(!$dialog.contains(e.target)){
+        e.preventDefault();
+      }
+    })
+
     if(n == 1){
       $dialog.setAttribute('open',true);
-    }else{
+    }else {
       $dialog.removeAttribute('open');
     }
   }
